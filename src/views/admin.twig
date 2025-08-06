@@ -1,0 +1,28 @@
+{% extends 'templates/base.twig' %}
+
+{% block content %}
+    <h2>Admin Panel</h2>
+    {% if message %}<div class="success">{{ message }}</div>{% endif %}
+
+    <form method="post" action="/?action=save">
+        <input type="hidden" name="id" id="news-id" value="">
+        <input type="text" name="title" id="title" placeholder="Title" required>
+        <textarea name="content" id="content" placeholder="Content" required></textarea>
+        <button type="submit">Save</button>
+    </form>
+
+    <h3>News List</h3>
+    <ul>
+        {% for item in news %}
+            <li>
+                <strong>{{ item.title }}</strong>
+                <p>{{ item.content }}</p>
+                <button class="edit-btn" data-id="{{ item.id }}" data-title="{{ item.title }}" data-content="{{ item.content|e('html_attr') }}">Edit</button>
+                <a href="/?action=delete&id={{ item.id }}" onclick="return confirm('Delete this news?')">Delete</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="admin.js"></script>
+{% endblock %}
