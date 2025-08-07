@@ -7,5 +7,20 @@ $(document).ready(function() {
         $('#news-id').val(id);
         $('#title').val(title);
         $('#content').val(content);
+
+        $('#submit-button').text('Save');
+    });
+
+    // $('#news-form').on('submit', function(e) {
+    //     setTimeout(() => {
+    //         $('#news-id').val('');
+    //         $('#title').val('');
+    //         $('#content').val('');
+    //         $('#submit-button').text('Create');
+    //     }, 500);
+    // });
+
+    $('#logout-button').click(function () {
+        window.location.href = '/?action=logout';
     });
 });

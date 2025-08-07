@@ -1,27 +1,53 @@
 {% extends 'templates/base.twig' %}
 
 {% block content %}
-    <h2>Admin Panel</h2>
-    {% if message %}<div class="success">{{ message }}</div>{% endif %}
+    <div class="admin">
 
-    <form method="post" action="/?action=save">
-        <input type="hidden" name="id" id="news-id" value="">
-        <input type="text" name="title" id="title" placeholder="Title" required>
-        <textarea name="content" id="content" placeholder="Content" required></textarea>
-        <button type="submit">Save</button>
-    </form>
+        <img class="logo" src="/images/logo.svg" alt="CGRD Logo">
 
-    <h3>News List</h3>
-    <ul>
-        {% for item in news %}
-            <li>
-                <strong>{{ item.title }}</strong>
-                <p>{{ item.content }}</p>
-                <button class="edit-btn" data-id="{{ item.id }}" data-title="{{ item.title }}" data-content="{{ item.content|e('html_attr') }}">Edit</button>
-                <a href="/?action=delete&id={{ item.id }}" onclick="return confirm('Delete this news?')">Delete</a>
-            </li>
-        {% endfor %}
-    </ul>
+        <div class="container">
+            {% if message %}
+                <div class="success message">{{ message }}</div>
+            {% endif %}
+
+            <h3>All news</h3>
+
+            <ul class="news-list">
+                {% for item in news %}
+                    <li>
+                        <div>
+                            <h4>{{ item.title }}</h4>
+                            <p>{{ item.content }}</p>
+                        </div>
+                        <div>
+                            <a
+                                    class="edit-btn"
+                                    data-id="{{ item.id }}"
+                                    data-title="{{ item.title }}"
+                                    data-content="{{ item.content|e('html_attr') }}">
+                                <img src="images/pencil.svg" alt="Edit news item {{ item.title }}">
+
+                            </a>
+                            <a
+                                    href="/?action=delete&id={{ item.id }}"
+                                    onclick="return confirm('Delete this news?')"
+                            >
+                                <img src="images/close.svg" alt="Delete news item {{ item.title }}">
+                            </a>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <form method="post" action="/?action=save">
+                <input type="hidden" name="id" id="news-id" value="">
+                <input type="text" name="title" id="title" placeholder="Title" required>
+                <textarea name="content" id="content" placeholder="Description" required></textarea>
+                <button type="submit" id="submit-button" class="mb-1">Create</button>
+                <button type="button" id="logout-button">Logout</button>
+            </form>
+        </div>
+    </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="admin.js"></script>

@@ -31,20 +31,33 @@ switch ($action) {
         } else {
             echo $twig->render('login.twig', ['error' => $result['error']]);
         }
+
+        break;
+    case 'logout':
+        $auth->logout();
+        header("Location: /");
+
         break;
     case 'save':
         if ($_POST['id']) {
             $newsModel->update($_POST['id'], $_POST['title'], $_POST['content']);
-        } else {
-            $newsModel->create($_POST['title'], $_POST['content']);
+            header("Location: /?message=News was successfully changed!");
+
+            break;
         }
-        header("Location: /?message=Saved");
+
+        $newsModel->create($_POST['title'], $_POST['content']);
+        header("Location: /?message=News was successfully created!");
+
         break;
     case 'delete':
         $newsModel->delete($_GET['id']);
-        header("Location: /?message=Deleted");
+        header("Location: /?message=News was deleted!");
+
         break;
     default:
         $news = $newsModel->all();
         echo $twig->render('admin.twig', ['news' => $news, 'message' => $_GET['message'] ?? null]);
+
+        break;
 }

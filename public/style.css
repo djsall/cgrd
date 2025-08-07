@@ -1,6 +1,23 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     font-family: Arial, sans-serif;
     margin: 30px;
+    background-image: url("images/waves.svg");
+}
+
+.w-full {
+    width: 100%;
+}
+
+.mb-1 {
+    margin-bottom: 1rem;
+}
+
+.logo {
+    margin-bottom: 2rem;
 }
 
 input, textarea {
@@ -10,14 +27,113 @@ input, textarea {
     width: 300px;
 }
 
+.message {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    width: 100%;
+    text-align: center;
+    border: 1px solid;
+}
+
 .success {
-    background-color: #c8f7c5;
-    padding: 10px;
-    margin-bottom: 15px;
+    background-color: #f6fff0;
+    color: #79b23d;
+    border-color: #d3ffa8;
 }
 
 .error {
-    background-color: #f7c5c5;
-    padding: 10px;
-    margin-bottom: 15px;
+    background-color: #ffeff0;
+    border: 1px solid #d27171;
+    color: #d27171;
+}
+
+.news-list {
+    list-style-type: none;
+    padding:0;
+
+    li {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        border: 1px solid #f0f0f0;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        margin-bottom: 1rem;
+
+        background-color: rgba(252, 252, 252, 0.5);
+
+
+        div {
+            display: flex;
+            align-items: center;
+
+            h4, p {
+                margin-right: 2rem;
+            }
+
+            img {
+                width: 15px;
+                margin-left: 1rem;
+            }
+        }
+
+    }
+}
+
+.login, .admin {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+
+    color: #16396b;
+
+    .container {
+        width: 100%;
+
+        @media (max-width: 767px) {
+            max-width: 100%;
+        }
+
+        @media (min-width: 768px) and (max-width: 1024px) {
+            max-width: 60%;
+        }
+
+        @media (min-width: 1025px) {
+            max-width: 40%;
+        }
+
+        input, textarea {
+            height: 3rem;
+            width: 100%;
+            background-color: rgba(252, 252, 252, 0.5);
+            border: 1px solid #f0f0f0;
+            color: #16396b;
+        }
+
+        textarea {
+            height: 8rem;
+            margin-bottom: 1rem;
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: #98a7bd;
+        }
+
+        button {
+            background-color: #16396b;
+            color: #ffff;
+            transition: opacity 200ms ease-in-out;
+
+            width: 100%;
+            height: 3rem;
+        }
+
+        button:hover {
+            opacity: 75%;
+        }
+    }
 }
