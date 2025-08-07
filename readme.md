@@ -10,6 +10,11 @@ A minimal PHP news admin interface with login and CRUD functionality for CGRD.
 make up
 ```
 
+
+### Access the application
+
+[http://localhost:8000](http://localhost:8000)
+
 ### Clean up the containers
 
 ```sh
