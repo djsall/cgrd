@@ -138,7 +138,7 @@ button:hover {
 @media (min-width: 1025px) {
     .login .container,
     .admin .container {
-        max-width: 40%;
+        max-width: 30%;
     }
 }
 
