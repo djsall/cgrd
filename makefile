@@ -8,10 +8,9 @@ DB_HOST=127.0.0.1
 DB_PORT=3307
 SQL_FILE=./src/database/setup.sql
 
-# Dynamically gets the db container name from docker-compose
 DB_CONTAINER=$(shell docker-compose ps -q db)
 
-up:
+compose:
 	docker-compose up -d --build
 	@echo "Waiting for MySQL to be ready..."
 
@@ -22,7 +21,7 @@ up:
 
 	@echo "\nMySQL is ready!"
 
-init: up sql
+up: compose sql
 
 sql:
 	@echo "Running SQL initialization..."

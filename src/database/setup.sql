@@ -1,11 +1,9 @@
 CREATE DATABASE IF NOT EXISTS cgrd CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE cgrd;
 
--- Allow root from any host
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'root' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 
--- Create a simple table as placeholder
 CREATE TABLE IF NOT EXISTS news (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,

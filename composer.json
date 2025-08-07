@@ -1,6 +1,6 @@
 {
-    "require": {
-        "twig/twig": "^3.21",
-      "ext-pdo": "*"
-    }
+  "require": {
+    "twig/twig": "^3.21",
+    "ext-pdo": "*"
+  }
 }
