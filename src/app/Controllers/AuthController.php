@@ -1,26 +1,53 @@
 <?php
+
 namespace src\app\Controllers;
+
+use Twig\Environment;
 
 class AuthController
 {
-    public function login($username, $password): array
+    private Environment $twig;
+
+    public function __construct(Environment $twig)
     {
-        if ($username === 'admin' && $password === 'test') {
-            $_SESSION['user'] = 'admin';
-            return ['success' => true];
-        }
-        return ['success' => false, 'error' => 'Wrong Login Data!'];
+        $this->twig = $twig;
     }
 
-    public function checkAuth(): bool
+    public function login(string $username, string $password): void
     {
-        return isset($_SESSION['user']) && $_SESSION['user'] === 'admin';
+        if ($this->isValidCredentials($username, $password)) {
+            $_SESSION['user'] = $username;
+            header('Location: /');
+            exit;
+        }
+
+        echo $this->twig->render('login.twig', [
+            'error' => 'Invalid username or password.'
+        ]);
+        exit;
     }
 
     public function logout(): void
     {
+        session_unset();
         session_destroy();
+        header('Location: /');
+        exit;
+    }
+
+    public function isAuthenticated(): bool
+    {
+        return isset($_SESSION['user']);
+    }
+
+    private function isValidCredentials(string $username, string $password): bool
+    {
+        return $username === 'admin' && $password === 'test';
+    }
+
+    public function showLoginForm(): void
+    {
+        echo $this->twig->render('login.twig');
+        exit;
     }
 }
-
-?>

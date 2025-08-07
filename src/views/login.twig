@@ -1,21 +1,16 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-<main class="login">
-    <img class="logo" src="/images/logo.svg" alt="CGRD Logo">
-    <div class="container">
-        {% if error %}
-            <div class="error message">{{ error }}</div>{% endif %}
-        <form method="post" action="/?action=login">
-            <input type="text" name="username" placeholder="Username" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <button type="submit">Login</button>
-        </form>
-    </div>
-</main>
-</body>
-</html>
+{% extends 'templates/base.twig' %}
+
+{% block content %}
+    <main class="login">
+        <img class="logo" src="/images/logo.svg" alt="CGRD Logo">
+        <div class="container">
+            {% if error %}
+                <div class="error message">{{ error }}</div>{% endif %}
+            <form method="post" action="/?action=login">
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </main>
+{% endblock %}

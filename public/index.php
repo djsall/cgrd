@@ -1,63 +1,57 @@
 <?php
 
+declare(strict_types=1);
+
 use src\app\Controllers\AuthController;
+use src\app\Controllers\NewsController;
 use src\app\Models\News;
 
 session_start();
+
 require '../vendor/autoload.php';
-
-$loader = new \Twig\Loader\FilesystemLoader('../src/views');
-$twig = new \Twig\Environment($loader);
-
 require '../src/config/config.php';
 require '../src/app/controllers/AuthController.php';
+require '../src/app/controllers/NewsController.php';
 require '../src/app/models/News.php';
 
-$pdo = new PDO($dsn, $user, $pass);
+$twig = new \Twig\Environment(
+    new \Twig\Loader\FilesystemLoader('../src/views')
+);
+
+$pdo = new PDO($dsn, $user, $pass, [
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+]);
+
+$auth = new AuthController($twig);
 $newsModel = new News($pdo);
-$auth = new AuthController();
+$newsController = new NewsController($newsModel, $twig);
+
 $action = $_GET['action'] ?? null;
 
-if (!$auth->checkAuth() && $action !== 'login') {
-    echo $twig->render('login.twig');
-    exit;
+$auth = new AuthController($twig);
+
+if (!$auth->isAuthenticated() && $action !== 'login') {
+    $auth->showLoginForm();
 }
 
 switch ($action) {
     case 'login':
-        $result = $auth->login($_POST['username'], $_POST['password']);
-        if ($result['success']) {
-            header("Location: /");
-        } else {
-            echo $twig->render('login.twig', ['error' => $result['error']]);
-        }
-
+        $auth->login($_POST['username'] ?? '', $_POST['password'] ?? '');
         break;
+
     case 'logout':
         $auth->logout();
-        header("Location: /");
-
         break;
+
     case 'save':
-        if ($_POST['id']) {
-            $newsModel->update($_POST['id'], $_POST['title'], $_POST['content']);
-            header("Location: /?message=News was successfully changed!");
-
-            break;
-        }
-
-        $newsModel->create($_POST['title'], $_POST['content']);
-        header("Location: /?message=News was successfully created!");
-
+        $newsController->save($_POST);
         break;
+
     case 'delete':
-        $newsModel->delete($_GET['id']);
-        header("Location: /?message=News was deleted!");
-
+        $newsController->delete($_GET['id'] ?? null);
         break;
-    default:
-        $news = $newsModel->all();
-        echo $twig->render('admin.twig', ['news' => $news, 'message' => $_GET['message'] ?? null]);
 
+    default:
+        $newsController->index($_GET['message'] ?? null);
         break;
 }
