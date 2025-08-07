@@ -10,9 +10,6 @@ session_start();
 
 require '../vendor/autoload.php';
 require '../src/config/config.php';
-require '../src/app/controllers/AuthController.php';
-require '../src/app/controllers/NewsController.php';
-require '../src/app/models/News.php';
 
 $twig = new \Twig\Environment(
     new \Twig\Loader\FilesystemLoader('../src/views')
